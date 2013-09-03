@@ -1,0 +1,14 @@
+# OpenStreetMap JSON Serialization Specification
+
+This is a specification for OpenStreetMap data serialized as JSON. Knowledge of the OSM data model and existing XML format is assumed
+
+# License
+
+The text of this specification is licensed under a
+[Creative Commons Attribution 3.0 License](http://creativecommons.org/licenses/by/3.0/).
+However, the use of this spec in products and code is entirely free:
+there are no royalties, restrictions, or requirements.
+
+## Authors
+
+* Paul Norman (pnorman)
