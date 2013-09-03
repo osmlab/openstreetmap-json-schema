@@ -1,14 +1,22 @@
 # OpenStreetMap JSON Serialization Specification
 
-This is a specification for OpenStreetMap data serialized as JSON. Knowledge of the OSM data model and existing XML format is assumed
+This is a specification for OpenStreetMap data serialized as JSON. Knowledge of the OSM data model and existing XML formats is assumed.
 
-# License
+## License
 
 The text of this specification is licensed under a
 [Creative Commons Attribution 3.0 License](http://creativecommons.org/licenses/by/3.0/).
 However, the use of this spec in products and code is entirely free:
 there are no royalties, restrictions, or requirements.
 
+## References
+
+* [Overpass API JSON output](http://overpass-api.de/output_formats.html#json)
+
+* [CGImap JSON outputter](https://github.com/zerebubuth/openstreetmap-cgimap/blob/master/src/json_formatter.cpp)
+
 ## Authors
 
 * Paul Norman (pnorman)
+
+Some wording based on [tilejson-spec](https://raw.github.com/mapbox/tilejson-spec/)
