@@ -50,10 +50,15 @@ osm-json formats use the JSON format as described in RFC 4627.
         "maxlon": 180.0
     }
 
-    // OPTIONAL. A list containing the OSM nodes in the file.
-    "nodes": [
+    // REQUIRED. A list containing the OSM nodes, ways, and relations in the file.
+    // In most cases, the array SHOULD be sorted first by type (node, way, relation)
+    // then by ID.
+    "objects": [
         // An example of a node.
         {
+            // REQUIRED. The type of the object. In this case, a 'node'.
+            "type": "node",
+ 
             // REQUIRED. If the object is visible, or if it has been deleted.
             "visible": true,
 
@@ -99,12 +104,12 @@ osm-json formats use the JSON format as described in RFC 4627.
         },
 
         // Repeat for additional nodes. Any two nodes MUST NOT have the same id
-    ],
 
-    // OPTIONAL. A list containing the OSM ways in the file.
-    "ways": [
         // An example of a way
         {
+            // REQUIRED. The type of the object. In this case, a 'way'.
+            "type": "way",
+ 
             // REQUIRED. The positive integer ID of the way.
             "id": 1,
 
@@ -130,12 +135,12 @@ osm-json formats use the JSON format as described in RFC 4627.
         },
 
         // Repeat for additional ways. Any two ways MUST NOT have the same id
-    ],
 
-    // OPTIONAL. A list containing the OSM relations in the file.
-    "relations": [
         // An example of a relation
         {
+            // REQUIRED. The type of the object. In this case, a 'relation'.
+            "type": "relation",
+ 
             // REQUIRED. The positive integer ID of the relation.
             "id": 1,
 
