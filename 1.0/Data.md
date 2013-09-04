@@ -89,13 +89,13 @@ osm-json formats use the JSON format as described in RFC 4627.
             // MUST be present
             "user": "AnEditor",
 
-            // OPTIONAL. The tags of the object. Untagged objects have no
-            // tag pairs.
+            // OPTIONAL. The tags of the object. Untagged objects have no tags
             "tags": {
                 // A tag pair. Tag values may be up to 255 characters in
                 // length and may contain newlines, which will need to be
                 // encoded.
                 "key": "value"
+            }
         },
 
         // Repeat for additional nodes. Any two nodes MUST NOT have the same id
@@ -115,7 +115,9 @@ osm-json formats use the JSON format as described in RFC 4627.
             "timestamp": "2010-02-07T07:07:58",
             "uid": 1234,
             "user": "AnEditor",
-            "tags": {},
+            "tags": { 
+                // ...
+            },
 
             // REQUIRED. A list of integers for node references. The list MUST
             // have at least one reference. Node references do not need to be
@@ -144,7 +146,9 @@ osm-json formats use the JSON format as described in RFC 4627.
             "timestamp": "2010-02-07T07:07:58",
             "uid": 1234,
             "user": "AnEditor",
-            "tags": {},
+            "tags": {
+                // ...
+            },
 
             // OPTIONAL. A list of relation members. A relation with no
             // members is allowed, but probably a mistake in the data.
