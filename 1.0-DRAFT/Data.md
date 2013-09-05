@@ -62,7 +62,10 @@ osm-json formats use the JSON format as described in RFC 4627.
             "visible": true,
 
             // REQUIRED. The positive integer ID of the node. Implementations
-            // SHOULD NOT use a 32-bit integer for this
+            // SHOULD use a representation that allows integers above 2^31.
+            // The maximum node ID from the main OSM API exceeds 2^31. Some
+            // software uses high IDs (>2^32) when making one OSM file from
+            // multiple sources.
             "id": 1,
 
             // REQUIRED. The positive integer version number of the node.
@@ -113,7 +116,10 @@ osm-json formats use the JSON format as described in RFC 4627.
     "ways": [
         // An example of a way
         {
-            // REQUIRED. The positive integer ID of the way.
+            // REQUIRED. The positive integer ID of the way. The main OSM API
+            // has a maximum way ID well under 2^31 but software MAY want to
+            // use a representation that supports IDs >2^31. Some software uses
+            // high IDs (>2^32) when making one OSM file from multiple sources.
             "id": 1,
 
             // The next attributes are the same for nodes, ways, and relations
@@ -127,10 +133,10 @@ osm-json formats use the JSON format as described in RFC 4627.
 
             // REQUIRED. A list of integers for node references. The list MUST
             // have at least one reference. Node references do not need to be
-            // present in the list of nodes in the file. Implementations MUST
-            // support any nd reference to a node ID they support (e.g. they
-            // cannot use 64-bit integers for node IDs and 32-bit integers for
-            // nd references)
+            // present in the list of nodes in the file. Node references may
+            // repeat. Implementations MUST support nd references to any node
+            // ID they support (e.g. they cannot use 64-bit integers for node
+            // IDs and 32-bit integers for nd references)
             "nds": [
                 1,
                 2,
@@ -145,7 +151,11 @@ osm-json formats use the JSON format as described in RFC 4627.
     "relations": [
         // An example of a relation
         {
-            // REQUIRED. The positive integer ID of the relation.
+            // REQUIRED. The positive relation ID of the way. The main OSM API
+            // has a maximum relation ID well under 2^31 but software MAY want
+            // to use a representation that supports IDs >2^31. Some software
+            // uses high IDs (>2^32) when making one OSM file from multiple
+            // sources.
             "id": 1,
 
             // The next attributes are the same for nodes, ways, and relations
@@ -167,8 +177,10 @@ osm-json formats use the JSON format as described in RFC 4627.
 
                     // REQUIRED. The ID of the object in the relation
                     // Note that the object referenced may not be in this file.
-                    // Implementations MUST support any reference to a 
+                    // Implementations MUST support references to any
                     // node/way/relation ID that they support.
+                    // One way to meet this is by using 64-bit integers for
+                    // nodes/ways/relations.
                     "ref": 1,
 
                     // REQUIRED. The role of the relation member. Many relation
