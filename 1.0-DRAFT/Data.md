@@ -123,9 +123,7 @@ osm-json formats use the JSON format as described in RFC 4627.
             "timestamp": "2010-02-07T07:07:58Z",
             "uid": 1234,
             "user": "AnEditor",
-            "tags": { 
-                // ...
-            },
+            "tags": {},
 
             // REQUIRED. A list of integers for node references. The list MUST
             // have at least one reference. Node references do not need to be
@@ -157,9 +155,7 @@ osm-json formats use the JSON format as described in RFC 4627.
             "timestamp": "2010-02-07T07:07:58Z",
             "uid": 1234,
             "user": "AnEditor",
-            "tags": {
-                // ...
-            },
+            "tags": {},
 
             // REQUIRED. A list of relation members. A relation with no
             // members is allowed, but probably a mistake in the data.
