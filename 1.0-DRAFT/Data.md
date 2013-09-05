@@ -40,7 +40,7 @@ osm-json formats use the JSON format as described in RFC 4627.
     "license": "http://opendatacommons.org/licenses/odbl/1-0/",
 
     // OPTIONAL. The bounds of the area
-    // To-do: Allow multiple bounds?
+    // TODO: Allow multiple bounds?
     "bounds" : {
         // If the bounds are present, all four keys are REQUIRED and are
         // floating point numbers that form a bounding box.
@@ -106,7 +106,7 @@ osm-json formats use the JSON format as described in RFC 4627.
             }
         },
 
-        // Repeat for additional nodes. Any two nodes MUST NOT have the same id
+        // Repeat for additional nodes. Any two nodes MUST NOT have the same ID
     ],
 
     // REQUIRED. A list containing the OSM ways in the file.
@@ -140,7 +140,7 @@ osm-json formats use the JSON format as described in RFC 4627.
             ]
         },
 
-        // Repeat for additional ways. Any two ways MUST NOT have the same id
+        // Repeat for additional ways. Any two ways MUST NOT have the same ID
     ],
 
     // REQUIRED. A list containing the OSM relations in the file.
@@ -185,7 +185,7 @@ osm-json formats use the JSON format as described in RFC 4627.
                 // Repeat for additional relation members
         },
 
-        // Repeat for additional relations. Any two relations MUST NOT have the same id
+        // Repeat for additional relations. Any two relations MUST NOT have the same ID
     ]
 }
 ```
