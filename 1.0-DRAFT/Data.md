@@ -77,7 +77,7 @@ osm-json formats use the JSON format as described in RFC 4627.
 
             // REQUIRED. The longitude of the node. The main API uses 7
             // decimal places of accuracy, but other uses may require more.
-            "lat": -123.5,
+            "lon": -123.5,
 
             // REQUIRED. The positive integer ID of the changeset the node
             // was modified in.
