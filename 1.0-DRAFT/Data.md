@@ -7,9 +7,9 @@ be interpreted as described in RFC 2119.
 ## 1. Purpose
 
 This specification attempts to create a standard for representing
-OpenStreetMap data in a JSON format. It applies to data from an OSM API or
-similar source but *this* specification does not cover modified data stored
-locally, data for uploading
+OpenStreetMap data in a JSON format. It is intended to encode OSM data for
+interchange between an API and OSM editors. It does not cover modified data
+stored locally or diffs.
 
 ## 2. File Format
 
