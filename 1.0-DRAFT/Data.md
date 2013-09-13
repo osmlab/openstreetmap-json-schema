@@ -259,7 +259,7 @@ Comments are not allowed in JSON but are present in the example for clarity.
             "timestamp": "2010-02-07T07:07:59Z",
             "uid": 1234,
             "user": "AnEditor",
-        },
+        }
 
         // Repeat for additional relations.
     ]
