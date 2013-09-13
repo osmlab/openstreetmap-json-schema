@@ -24,7 +24,7 @@ stored locally or diffs.
 
 The osm-json data format uses the JSON format as described in RFC 4627.
 
-The format is formally described in data.json which is a
+The format is formally described in [data.json](data.json) which is a
 [JSON Schema](http://json-schema.org/) as defined in the IETF draft
 [draft-fge-json-schema-validation-00](http://tools.ietf.org/html/draft-fge-json-schema-validation-00).
 
