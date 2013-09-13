@@ -97,13 +97,13 @@ osm-json formats use the JSON format as described in RFC 4627.
             // portability, it is RECOMMENDED that this is in UTC.
             "timestamp": "2010-02-07T07:07:58Z",
 
-            // OPTIONAL. The user ID. For anonymous objects a uid MUST NOT
-            // be present. For non-anonymous objects a uid MUST be present
+            // REQUIRED. The user ID. For anonymous objects the uid MUST be
+            // null. For non-anonymous objects a uid MUST be present.
             "uid": 1234,
 
-            // OPTIONAL. The user name. For anonymous objects a user name
-            // MUST NOT be present. For non-anonymous objects a user name
-            // MUST be present
+            // REQUIRED. The user name. For anonymous objects the user name
+            // MUST be null. For non-anonymous objects a user name MUST be
+            // present.
             "user": "AnEditor",
 
             // REQUIRED. The tags of the object. Untagged objects have no tags
