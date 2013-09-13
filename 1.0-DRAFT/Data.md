@@ -95,7 +95,7 @@ Comments are not allowed in JSON but are present in the example for clarity.
         "minlon": -180.0,
         "maxlat": 90.0,
         "maxlon": 180.0
-    }
+    },
 
     // TODO: changesets?
 
