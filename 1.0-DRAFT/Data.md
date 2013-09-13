@@ -102,7 +102,7 @@ Comments are not allowed in JSON but are present in the example for clarity.
     // Required. A list containing the OSM nodes in the file, which may be
     // empty. Nodes in a file MUST have a unique (id, version) pair.
     "nodes": [
-        // An example of a node.
+        // An example of a visible node.
         {
             // Required. True if the object is visible, or false if it has
             // been deleted.
@@ -126,7 +126,7 @@ Comments are not allowed in JSON but are present in the example for clarity.
 
             // Required. The positive integer ID of the changeset the node
             // was modified in.
-            "changeset": 1234,
+            "changeset": 12345,
 
             // Required. When the node was last modified.
             "timestamp": "2010-02-07T07:07:58Z",
@@ -147,14 +147,26 @@ Comments are not allowed in JSON but are present in the example for clarity.
                 "key": "value"
             }
         },
-        // TODO: add deleted history example
+        // An example of a deleted node
+        {
+            "visible": false,
+
+            // As with a visible node, but note that there are no lat, lon or
+            // tags attributes.
+            "id": 1,
+            "version": 2,
+            "changeset": 12345,
+            "timestamp": "2010-02-07T07:07:59Z",
+            "uid": 1234,
+            "user": "AnEditor"
+        },
         // Repeat for additional nodes.
     ],
 
     // Required. A list containing the OSM ways in the file, which may be
     // empty. Ways in a file MUST have a unique (id, version) pair.
     "ways": [
-        // An example of a way
+        // An example of a visible way
         {
             // Required. The positive integer ID of the way. The main OSM API
             // has a maximum way ID well under 2^31 but software may want to
@@ -165,7 +177,7 @@ Comments are not allowed in JSON but are present in the example for clarity.
             // The next attributes are the same for nodes, ways, and relations
             "visible": true,
             "version": 1,
-            "changeset": 1234,
+            "changeset": 12345,
             "timestamp": "2010-02-07T07:07:58Z",
             "uid": 1234,
             "user": "AnEditor",
@@ -180,6 +192,18 @@ Comments are not allowed in JSON but are present in the example for clarity.
                 3
             ]
         },
+        // An example of a deleted way
+        {
+            "visible": false,
+
+            // As with a visible way, but no tags or nodes attributes
+            "id": 1,
+            "version": 2,
+            "changeset": 12345,
+            "timestamp": "2010-02-02T07:07:59Z",
+            "uid": 1234,
+            "user": "AnEditor"
+        },
 
         // Repeat for additional ways.
     ],
@@ -187,7 +211,7 @@ Comments are not allowed in JSON but are present in the example for clarity.
     // Required. A list containing the OSM relations in the file, which may be
     // empty. Relations in a file MUST have a unique (id, version) pair.
     "relations": [
-        // An example of a relation
+        // An example of a visible relation
         {
             // Required. The positive relation ID of the way. The main OSM API
             // has a maximum relation ID well under 2^31 but software may want
@@ -222,8 +246,19 @@ Comments are not allowed in JSON but are present in the example for clarity.
                     // values.
                     "role": "foo"
                 },
-
                 // Repeat for additional relation members
+            ]
+        },
+        {
+            "visible": false,
+
+            // The next attributes are the same for nodes, ways, and relations
+            "id": 2,
+            "version": 2,
+            "changeset": 12345,
+            "timestamp": "2010-02-07T07:07:59Z",
+            "uid": 1234,
+            "user": "AnEditor",
         },
 
         // Repeat for additional relations.
