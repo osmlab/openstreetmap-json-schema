@@ -1,0 +1,470 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "OSM Data",
+  "description": "OSM Data, as returned by the API",
+  "type": "object",
+	"properties": {
+    "version": {
+      "description": "The OSM API version",
+      "type": "string",
+      "enum": ["0.6"]
+    },
+    "generator": {
+      "description": "The software used to generate the OSM JSON.",
+      "type": "string"
+    },
+    "copyright": {
+      "description": "The copyright of the data.",
+      "type": "string"
+    },
+    "attribution": {
+      "description": "The required attribution URL of the data.",
+      "type": "string"
+    },
+    "license": {
+      "description": "The URL of the license for the data.",
+      "type": "string"
+    },
+    "bounds": {
+      "description": "The bounding box for the area downloaded.",
+      "type": "object",
+      "properties": {
+        "minlat" : {
+          "description": "The minimum latitude of the bounding box",
+          "type": "number",
+          "minimum": -90.0,
+          "maximum": 90.0
+        },
+        "maxlat" : {
+          "description": "The maximum latitude of the bounding box",
+          "type": "number",
+          "minimum": -90.0,
+          "maximum": 90.0
+        },
+        "minlon" : {
+          "description": "The minimum latitude of the bounding box",
+          "type": "number",
+          "minimum": -180.0,
+          "maximum": 180
+        },
+        "maxlon" : {
+          "description": "The maximum longitude of the bounding box",
+          "type": "number",
+          "minimum": -180.0,
+          "maximum": 180
+        }
+      }
+    },
+    "nodes": {
+      "description": "The OSM nodes in the file",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "description": "A visible OSM node",
+            "type": "object",
+            "properties": {
+              "visible": {
+                "description": "If the node is visible (not deleted) in this version or not",
+                "type": "boolean",
+                "enum": [true]
+              },
+              "id": {
+                "description": "The ID of the node",
+                "$ref": "#/definitions/id"
+              },
+              "version": {
+                "description": "The version of the node",
+                "type": "integer",
+                "minimum": 1
+              },
+              "lat": {
+                "description": "The latitude of the node",
+                "type": "number",
+                "minimum": -90.0,
+                "maximum": 90.0
+              },
+              "lon": {
+                "description": "The longitude of the node",
+                "type": "number",
+                "minimum": -180.0,
+                "maximum": 180
+              },
+              "changeset": {
+                "description": "The changeset this version of this node was edited in",
+                "$ref": "#/definitions/id"
+              },
+              "uid": {
+                "description": "The user id",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "user": {
+                "description": "The user name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "timestamp": {
+                "description": "The ISO 8601 combined date/time formatted time when this version of this node was modified at",
+                "type": "string"
+              },
+              "tags": {
+                "$ref": "#/definitions/tags"
+              }
+            },
+            "required": ["visible", "id", "version", "lat", "lon", "changeset", "uid", "user", "timestamp", "tags"],
+            "additionalProperties": false
+          },
+          {
+            "description": "A deleted OSM node",
+            "type": "object",
+            "properties": {
+              "visible": {
+                "description": "If the node is visible (not deleted) in this version or not",
+                "type": "boolean",
+                "enum": [false]
+              },
+              "id": {
+                "description": "The ID of the node",
+                "$ref": "#/definitions/id"
+              },
+              "version": {
+                "description": "The version of the node",
+                "type": "integer",
+                "minimum": 1
+              },
+              "changeset": {
+                "description": "The changeset this version of this node was edited in",
+                "$ref": "#/definitions/id"
+              },
+              "uid": {
+                "description": "The user id",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "user": {
+                "description": "The user name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "timestamp": {
+                "description": "The ISO 8601 combined date/time formatted time when this version of this node was modified at",
+                "type": "string"
+              }
+            },
+            "required": ["visible", "id", "version", "changeset", "uid", "user", "timestamp"],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "ways": {
+      "description": "The OSM ways in the file",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "description": "A visible OSM way",
+            "type": "object",
+            "properties": {
+              "visible": {
+                "description": "If the way is visible (not deleted) in this version or not",
+                "type": "boolean",
+                "enum": [true]
+              },
+              "id": {
+                "description": "The ID of the way",
+                "$ref": "#/definitions/id"
+              },
+              "version": {
+                "description": "The version of the way",
+                "type": "integer",
+                "minimum": 1
+              },
+              "changeset": {
+                "description": "The changeset this version of this way was edited in",
+                "$ref": "#/definitions/id"
+              },
+              "uid": {
+                "description": "The user id",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "user": {
+                "description": "The user name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "timestamp": {
+                "description": "The ISO 8601 combined date/time formatted time when this version of this way was modified at",
+                "type": "string"
+              },
+              "nodes": {
+                "description": "The ordered list of nodes for the way",
+                "type": "array",
+                "items": { "$ref": "#/definitions/id" },
+                "minItems": 1
+              },
+              "tags": {
+                "$ref": "#/definitions/tags"
+              }
+            },
+            "required": ["visible", "id", "version", "changeset", "uid", "user", "timestamp", "nodes", "tags"],
+            "additionalProperties": false
+          },
+          {
+            "description": "A deleted OSM way",
+            "type": "object",
+            "properties": {
+              "visible": {
+                "description": "If the way is visible (not deleted) in this version or not",
+                "type": "boolean",
+                "enum": [false]
+              },
+              "id": {
+                "description": "The ID of the way",
+                "$ref": "#/definitions/id"
+              },
+              "version": {
+                "description": "The version of the way",
+                "type": "integer",
+                "minimum": 1
+              },
+              "changeset": {
+                "description": "The changeset this version of this way was edited in",
+                "$ref": "#/definitions/id"
+              },
+              "uid": {
+                "description": "The user id",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "user": {
+                "description": "The user name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "timestamp": {
+                "description": "The ISO 8601 combined date/time formatted time when this version of this way was modified at",
+                "type": "string"
+              }
+            },
+            "required": ["visible", "id", "version", "changeset", "uid", "user", "timestamp"],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "relations": {
+      "description": "The OSM relations in the file",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "description": "A visible OSM relation",
+            "type": "object",
+            "properties": {
+              "visible": {
+                "description": "If the relation is visible (not deleted) in this version or not",
+                "type": "boolean",
+                "enum": [true]
+              },
+              "id": {
+                "description": "The ID of the relation",
+                "$ref": "#/definitions/id"
+              },
+              "version": {
+                "description": "The version of the relation",
+                "type": "integer",
+                "minimum": 1
+              },
+              "changeset": {
+                "description": "The changeset this version of this relation was edited in",
+                "$ref": "#/definitions/id"
+              },
+              "uid": {
+                "description": "The user id",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "user": {
+                "description": "The user name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "timestamp": {
+                "description": "The ISO 8601 combined date/time formatted time when this version of this relation was modified at",
+                "type": "string"
+              },
+              "members": {
+                "description": "The ordered list of members for the relation",
+                "type": "array",
+                "items": {
+                  "description": "A relation member",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "description": "The type of OSM object the member is",
+                      "type": "string",
+                      "enum": ["node","way","relation"]
+                    },
+                    "id": {
+                      "description": "The ID of the member",
+                      "$ref": "#/definitions/id"
+                    },
+                    "role": {
+                      "description": "The role of the member",
+                      "type": "string",
+                      "minLength": 0
+                    }
+                  }
+                },
+                "minItems": 0
+              },
+              "tags": {
+                "$ref": "#/definitions/tags"
+              }
+            },
+            "required": ["visible", "id", "version", "changeset", "uid", "user", "timestamp", "members", "tags"],
+            "additionalProperties": false
+          },
+          {
+            "description": "A deleted OSM relation",
+            "type": "object",
+            "properties": {
+              "visible": {
+                "description": "If the relation is visible (not deleted) in this version or not",
+                "type": "boolean",
+                "enum": [false]
+              },
+              "id": {
+                "description": "The ID of the relation",
+                "$ref": "#/definitions/id"
+              },
+              "version": {
+                "description": "The version of the relation",
+                "type": "integer",
+                "minimum": 1
+              },
+              "changeset": {
+                "description": "The changeset this version of this relation was edited in",
+                "$ref": "#/definitions/id"
+              },
+              "uid": {
+                "description": "The user id",
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "user": {
+                "description": "The user name",
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "timestamp": {
+                "description": "The ISO 8601 combined date/time formatted time when this version of this relation was modified at",
+                "type": "string"
+              }
+            },
+            "required": ["visible", "id", "version", "changeset", "uid", "user", "timestamp"],
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "required": ["version", "nodes", "ways", "relations"],
+  "additionalProperties": true,
+  "definitions": {
+    "id": {
+        "type": "integer",
+        "minimum": 1
+    },
+    "tags": {
+      "description": "The tags of the object",
+      "type": "object",
+      "patternProperties": {
+        "^.+$": {
+          "type": "string",
+          "minLength": 0
+        }
+      }
+    },
+    "untagged": {
+      "description": "The tags of the object",
+      "type": "object",
+      "maxProperties": 0
+    }
+  }
+}
