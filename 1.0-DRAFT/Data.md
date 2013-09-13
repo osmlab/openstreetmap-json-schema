@@ -1,4 +1,4 @@
-# osm-json 1.0
+# osm-json data 1.0
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to
@@ -20,38 +20,76 @@ stored locally or diffs.
   where `visible=false`). An example of a file not containing history is
   planet.osm.
 
-## 3. File Format
+## 3. Format
 
-osm-json formats use the JSON format as described in RFC 4627.
+The osm-json data format uses the JSON format as described in RFC 4627.
+
+The format is formally described in data.json which is a
+[JSON Schema](http://json-schema.org/) as defined in the IETF draft
+[draft-fge-json-schema-validation-00](http://tools.ietf.org/html/draft-fge-json-schema-validation-00).
+
+An example document is supplied but this document does not impose mandatory
+requirements.
+
+### Additional constraints
+
+It is not possible to express all constraints of the format in JSON Schema.
+These additional constraints MUST be followed.
+
+* There MUST NOT be two objects of the same id and version within either the
+  nodes, ways or relations lists. This constraint is within each type of object
+  not across all objects (e.g. a node and way can have the same id and version
+  as each other.)
+
+* `timestamp` attributes MUST be in ISO 8601 combined date/time in UTC.
+
+* For way nodes and relation members implementations must support references
+  in these to any node/way/relation ID they support (e.g. they cannot use
+  64-bit integers for node IDs and 32-bit integers for way nodes references)
+
+  One way of meeting this requirement is to use 64-bit integers for all IDs.
+
+* For anonymous objects the uid and username MUST be null. For non-anonymous
+  objects the uid and username MUST NOT be null.
+
+* 7 decimal places of accuracy MUST be supported for latitude and longitude.
+  Implementations MAY support more.
+
+* `minlat`, `maxlat`, `minlon` and `maxlon` MUST form a bounding box, i.e.
+  `maxlat` > `minlat` and `maxlon` > `minlon`.
+
+* All objects with the same uid MUST have the same username.
+
+* All objects with the same changeset MUST have the same uid (and username).
+
+## 4. Example document
+
+This example document is informative and does not set out mandatory
+requirements.
+
+Comments are not allowed in JSON but are present in the example for clarity.
 
 ```javascript
 {
-    // REQUIRED. The OSM API version, currently 0.6
+    // Required. The OSM API version, currently 0.6
     "version": "0.6",
 
-    // OPTIONAL. The software used to generate the OSM JSON. The behavior is
-    // not defined if merging different OSM JSON files with different
-    // generator values.
+    // Optional. The software used to generate the OSM JSON.
     "generator": "CGImap 0.2.0",
 
-    // OPTIONAL. The copyright of the data. The behavior is not defined if
-    // merging different OSM JSON files with different copyright values.
+    // Optional. The copyright of the data.
     "copyright": "OpenStreetMap and contributors",
 
-    // OPTIONAL. The required attribution URL of the data. The behavior is not
-    // defined if merging different OSM JSON files with different attribution
-    // values.
+    // Optional. The required attribution URL of the data.
     "attribution": "http://www.openstreetmap.org/copyright",
 
-    // OPTIONAL. The URL of the license for the data. The behavior is not
-    // defined if merging different OSM JSON files with different license
-    // values, and may not be legal.
+    // Optional. The URL of the license for the data.
     "license": "http://opendatacommons.org/licenses/odbl/1-0/",
 
-    // OPTIONAL. The bounds of the area
+    // Optional. The bounds of the area
     // TODO: Allow multiple bounds?
     "bounds" : {
-        // If the bounds are present, all four keys are REQUIRED and are
+        // If the bounds are present, all four keys are Required and are
         // floating point numbers that form a bounding box.
         "minlat": -90.0,
         "minlon": -180.0,
@@ -61,73 +99,65 @@ osm-json formats use the JSON format as described in RFC 4627.
 
     // TODO: changesets?
 
-    // REQUIRED. A list containing the OSM nodes in the file, which may be
+    // Required. A list containing the OSM nodes in the file, which may be
     // empty. Nodes in a file MUST have a unique (id, version) pair.
     "nodes": [
         // An example of a node.
         {
-            // REQUIRED. True if the object is visible, or false if it has
+            // Required. True if the object is visible, or false if it has
             // been deleted.
             "visible": true,
 
-            // REQUIRED. The positive integer ID of the node. Implementations
-            // SHOULD use a representation that allows integers above 2^31.
+            // Required. The positive integer ID of the node. Implementations
+            // should use a representation that allows integers above 2^31.
             // The maximum node ID from the main OSM API exceeds 2^31. Some
             // software uses high IDs (>2^32) when making one OSM file from
             // multiple sources.
             "id": 1,
 
-            // REQUIRED. The positive integer version number of the node.
+            // Required. The positive integer version number of the node.
             "version": 1,
 
-            // REQUIRED. The latitude of the node. The main API uses 7
-            // decimal places of accuracy, but other uses may require more.
+            // Required. The latitude of the node.
             "lat": 49.25,
 
-            // REQUIRED. The longitude of the node. The main API uses 7
-            // decimal places of accuracy, but other uses may require more.
+            // Required. The longitude of the node.
             "lon": -123.5,
 
-            // REQUIRED. The positive integer ID of the changeset the node
+            // Required. The positive integer ID of the changeset the node
             // was modified in.
             "changeset": 1234,
 
-            // REQUIRED. When the node was last modified, in the same format
-            // as with OSM XML (ISO 8601 combined date/time). For
-            // portability, it is RECOMMENDED that this is in UTC.
+            // Required. When the node was last modified.
             "timestamp": "2010-02-07T07:07:58Z",
 
-            // REQUIRED. The user ID. For anonymous objects the uid MUST be
-            // null. For non-anonymous objects a uid MUST be present.
+            // Required. The user ID. For anonymous objects the uid is null.
             "uid": 1234,
 
-            // REQUIRED. The user name. For anonymous objects the user name
-            // MUST be null. For non-anonymous objects a user name MUST be
-            // present.
+            // Required. The username. For anonymous objects the username
+            // is null.
             "user": "AnEditor",
 
-            // REQUIRED. The tags of the object. Untagged objects have no tags
+            // Required. The tags of the object. Untagged objects have no tags
             "tags": {
-                // A tag pair. Tag values may be up to 255 characters in
-                // length and may contain newlines, which will need to be
+                // A tag pair. Tags may contain newlines, which will need to be
                 // encoded.
-                // A tag value MUST NOT contain the characters 0x00 through
-                // 0x1F except 0x09 ('\t'), 0x0A ('\n') and 0x0D ('\r') even
-                // if they are escaped.
+                // The main API places additional constraints on tag values
+                // such as a maximum length of 255 characters.
                 "key": "value"
             }
         },
-
+        // TODO: add deleted history example
         // Repeat for additional nodes.
     ],
 
-    // REQUIRED. A list containing the OSM ways in the file, which may be
+    // Required. A list containing the OSM ways in the file, which may be
     // empty. Ways in a file MUST have a unique (id, version) pair.
     "ways": [
         // An example of a way
         {
-            // REQUIRED. The positive integer ID of the way. The main OSM API
-            // has a maximum way ID well under 2^31 but software MAY want to
+            // Required. The positive integer ID of the way. The main OSM API
+            // has a maximum way ID well under 2^31 but software may want to
             // use a representation that supports IDs >2^31. Some software uses
             // high IDs (>2^32) when making one OSM file from multiple sources.
             "id": 1,
@@ -141,13 +171,10 @@ osm-json formats use the JSON format as described in RFC 4627.
             "user": "AnEditor",
             "tags": {},
 
-            // REQUIRED. A list of integers for node references. The list MUST
+            // Required. A list of integers for node references. The list must
             // have at least one reference. Node references do not need to be
-            // present in the list of nodes in the file. Node references may
-            // repeat. Implementations MUST support nd references to any node
-            // ID they support (e.g. they cannot use 64-bit integers for node
-            // IDs and 32-bit integers for nd references)
-            "nds": [
+            // present in the list of nodes in the file.
+            "nodes": [
                 1,
                 2,
                 3
@@ -157,13 +184,13 @@ osm-json formats use the JSON format as described in RFC 4627.
         // Repeat for additional ways.
     ],
 
-    // REQUIRED. A list containing the OSM relations in the file, which may be
+    // Required. A list containing the OSM relations in the file, which may be
     // empty. Relations in a file MUST have a unique (id, version) pair.
     "relations": [
         // An example of a relation
         {
-            // REQUIRED. The positive relation ID of the way. The main OSM API
-            // has a maximum relation ID well under 2^31 but software MAY want
+            // Required. The positive relation ID of the way. The main OSM API
+            // has a maximum relation ID well under 2^31 but software may want
             // to use a representation that supports IDs >2^31. Some software
             // uses high IDs (>2^32) when making one OSM file from multiple
             // sources.
@@ -178,23 +205,18 @@ osm-json formats use the JSON format as described in RFC 4627.
             "user": "AnEditor",
             "tags": {},
 
-            // REQUIRED. A list of relation members. A relation with no
+            // Required. A list of relation members. A relation with no
             // members is allowed, but probably a mistake in the data.
             "members": [
                 {
-                    // REQUIRED. Either "node", "way", or "relation".
+                    // Required. Either "node", "way", or "relation".
                     // Indicates the type of object
                     "type": "node",
 
-                    // REQUIRED. The ID of the object in the relation
-                    // Note that the object referenced may not be in this file.
-                    // Implementations MUST support references to any
-                    // node/way/relation ID that they support.
-                    // One way to meet this is by using 64-bit integers for
-                    // nodes/ways/relations.
+                    // Required. The ID of the object in the relation
                     "ref": 1,
 
-                    // REQUIRED. The role of the relation member. Many relation
+                    // Required. The role of the relation member. Many relation
                     // members have blank roles. Rules for this regarding length
                     // and special characters are the same as for tag keys and
                     // values.
