@@ -11,7 +11,16 @@ OpenStreetMap data in a JSON format. It is intended to encode OSM data for
 interchange between an API and OSM editors. It does not cover modified data
 stored locally or diffs.
 
-## 2. File Format
+## 2. Definitions
+
+* History
+
+  A file is said to contain history if and only if it contains multiple
+  versions of the same ID object or if it contains deleted data (objects
+  where `visible=false`). An example of a file not containing history is
+  planet.osm.
+
+## 3. File Format
 
 osm-json formats use the JSON format as described in RFC 4627.
 
@@ -53,7 +62,7 @@ osm-json formats use the JSON format as described in RFC 4627.
     // TODO: changesets?
 
     // REQUIRED. A list containing the OSM nodes in the file, which may be
-    // empty.
+    // empty. Nodes in a file MUST have a unique (id, version) pair.
     "nodes": [
         // An example of a node.
         {
@@ -109,10 +118,11 @@ osm-json formats use the JSON format as described in RFC 4627.
             }
         },
 
-        // Repeat for additional nodes. Any two nodes MUST NOT have the same ID
+        // Repeat for additional nodes.
     ],
 
-    // REQUIRED. A list containing the OSM ways in the file.
+    // REQUIRED. A list containing the OSM ways in the file, which may be
+    // empty. Ways in a file MUST have a unique (id, version) pair.
     "ways": [
         // An example of a way
         {
@@ -144,10 +154,11 @@ osm-json formats use the JSON format as described in RFC 4627.
             ]
         },
 
-        // Repeat for additional ways. Any two ways MUST NOT have the same ID
+        // Repeat for additional ways.
     ],
 
-    // REQUIRED. A list containing the OSM relations in the file.
+    // REQUIRED. A list containing the OSM relations in the file, which may be
+    // empty. Relations in a file MUST have a unique (id, version) pair.
     "relations": [
         // An example of a relation
         {
@@ -193,7 +204,7 @@ osm-json formats use the JSON format as described in RFC 4627.
                 // Repeat for additional relation members
         },
 
-        // Repeat for additional relations. Any two relations MUST NOT have the same ID
+        // Repeat for additional relations.
     ]
 }
 ```
